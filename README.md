@@ -1,6 +1,6 @@
 # Imam Ali Quotes Website
 
-A beautiful, static mood-based quote browser featuring sayings from Imam Ali (Nahj al-Balagha).
+A beautiful, static mood-based quote browser featuring sayings from Imam Ali AS (Nahj al-Balagha).
 
 ---
 
