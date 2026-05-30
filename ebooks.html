@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>eBooks — Imam Ali Inspires</title>
+<meta name="description" content="Explore and purchase eBooks inspired by the wisdom of Imam Ali (AS) and the Holy Quran." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="style.css" />
+<style>
+  /* ---- Page-specific styles ---- */
+  .page-header {
+    text-align: center;
+    padding: 108px 0 48px;
+  }
+  .page-header h1 { opacity: 0; animation: fade-up 0.9s ease 0.1s forwards; }
+  .page-header .tagline { opacity: 0; animation: fade-up 0.9s ease 0.2s forwards; }
+
+  .divider {
+    width: 56px;
+    height: 1px;
+    background: var(--gold);
+    margin: 0 auto 56px;
+    position: relative;
+    opacity: 0;
+    animation: fade-up 0.9s ease 0.25s forwards;
+  }
+  .divider::after {
+    content: "";
+    position: absolute;
+    width: 6px; height: 6px;
+    background: var(--gold);
+    transform: rotate(45deg);
+    top: -2.5px; left: 50%;
+    margin-left: -3px;
+  }
+
+  /* ---- Book grid ---- */
+  .books-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 28px;
+    margin-bottom: 60px;
+    opacity: 0;
+    animation: fade-up 0.9s ease 0.35s forwards;
+  }
+
+  .book-card {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .book-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 40px -16px rgba(0, 0, 0, 0.45);
+  }
+
+  /* ---- Cover placeholder ---- */
+  .book-cover {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    max-height: 320px;
+    background: linear-gradient(155deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
+    border-bottom: 1px solid var(--card-border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .book-cover::before {
+    content: "";
+    position: absolute;
+    inset: 12px;
+    border: 1px solid var(--card-border);
+    border-radius: 8px;
+    pointer-events: none;
+  }
+
+  .book-cover-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .book-cover-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+    padding: 32px;
+    text-align: center;
+  }
+
+  .cover-ornament {
+    color: var(--gold);
+    font-size: 2.2rem;
+    opacity: 0.6;
+    letter-spacing: 10px;
+  }
+
+  .cover-title-text {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 1.15rem;
+    color: var(--ink);
+    line-height: 1.35;
+    opacity: 0.75;
+  }
+
+  .cover-line {
+    width: 36px;
+    height: 1px;
+    background: var(--gold);
+    opacity: 0.5;
+  }
+
+  /* ---- Book info ---- */
+  .book-info {
+    padding: 28px 28px 32px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+
+  .book-label {
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    font-weight: 300;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+
+  .book-title {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 1.35rem;
+    line-height: 1.3;
+    color: var(--ink);
+    margin-bottom: 12px;
+  }
+
+  .book-desc {
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 0.9rem;
+    color: var(--ink-soft);
+    line-height: 1.75;
+    flex: 1;
+    margin-bottom: 26px;
+  }
+
+  /* ---- Buy buttons ---- */
+  .buy-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .btn-buy {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-family: var(--sans);
+    font-weight: 400;
+    font-size: 0.84rem;
+    letter-spacing: 0.3px;
+    text-decoration: none;
+    padding: 11px 20px;
+    border-radius: 10px;
+    border: 1px solid var(--card-border);
+    color: var(--ink);
+    background: transparent;
+    transition: background 0.2s ease, border-color 0.2s ease,
+                color 0.2s ease, transform 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .btn-buy:hover {
+    transform: translateY(-1px);
+  }
+
+  .btn-buy svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    fill: currentColor;
+  }
+
+  /* Platform-specific accent colours */
+  .btn-amazon:hover {
+    background: rgba(255, 153, 0, 0.12);
+    border-color: rgba(255, 153, 0, 0.55);
+    color: #ff9900;
+  }
+
+  .btn-gumroad:hover {
+    background: rgba(255, 144, 232, 0.10);
+    border-color: rgba(255, 144, 232, 0.45);
+    color: #ff90e8;
+  }
+
+  .btn-payhip:hover {
+    background: rgba(91, 192, 222, 0.10);
+    border-color: rgba(91, 192, 222, 0.45);
+    color: #5bc0de;
+  }
+
+  /* ---- Section label above grid ---- */
+  .section-label {
+    text-align: center;
+    font-family: var(--sans);
+    font-weight: 300;
+    font-size: 0.78rem;
+    letter-spacing: 3.5px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fade-up 0.9s ease 0.3s forwards;
+  }
+
+  @media (max-width: 520px) {
+    .page-header { padding-top: 80px; }
+    .books-grid { grid-template-columns: 1fr; }
+    .book-info { padding: 22px 22px 26px; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar" aria-label="Main navigation">
+    <a class="navbar-brand" href="index.html" aria-label="Imam Ali Inspires home">
+      <img class="navbar-logo" src="sword.png" alt="Zulfiqar, sword of Imam Ali (AS)" />
+      <div class="navbar-brand-text">
+        <span class="brand-name">Imam Ali</span>
+        <span class="brand-sub">Inspires</span>
+      </div>
+    </a>
+    <ul class="navbar-links" role="list">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="all_quotes.html">Quotes</a></li>
+      <li><a href="ebooks.html" class="active">eBooks</a></li>
+      <li><a href="about.html">About</a></li>
+    </ul>
+    <div class="navbar-right">
+      <button class="theme-toggle" id="themeToggle" aria-label="Switch to light mode" title="Switch theme">
+        <span class="icon" id="themeIcon">&#9728;</span>
+      </button>
+      <button class="nav-hamburger" id="hamburger" aria-label="Toggle menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <div class="navbar-mobile" id="mobileMenu" aria-hidden="true">
+    <a href="index.html">Home</a>
+    <a href="all_quotes.html">Quotes</a>
+    <a href="ebooks.html" class="active">eBooks</a>
+    <a href="about.html">About Me</a>
+  </div>
+
+  <div class="wrap">
+
+    <div class="page-header">
+      <div class="ornament">&#10070; &nbsp; &#10070; &nbsp; &#10070;</div>
+      <h1>Our <span class="accent">eBooks</span></h1>
+      <p class="tagline">Wisdom you can carry with you, wherever you go.</p>
+    </div>
+
+    <div class="divider"></div>
+
+    <p class="section-label">Available on your preferred platform</p>
+
+    <div class="books-grid">
+
+      <!-- Book 1 -->
+      <div class="book-card">
+        <div class="book-cover">
+          <!-- Replace the placeholder below with an <img> tag once you have the cover:
+               <img class="book-cover-img" src="cover-sayings.jpg" alt="Sayings of Imam Ali (AS) cover" /> -->
+          <div class="book-cover-placeholder">
+            <div class="cover-ornament">&#10022;</div>
+            <div class="cover-line"></div>
+            <div class="cover-title-text">Sayings of<br>Imam Ali (AS)</div>
+            <div class="cover-line"></div>
+          </div>
+        </div>
+        <div class="book-info">
+          <div class="book-label">eBook · Vol. 1</div>
+          <h2 class="book-title">Sayings of Imam Ali (AS)</h2>
+          <p class="book-desc">
+            A curated collection of aphorisms from the <em>Nahj al-Balagha</em> — timeless words
+            on justice, faith, knowledge, and the human soul, drawn from one of the most celebrated
+            works of Islamic thought.
+          </p>
+          <div class="buy-buttons">
+            <a href="#" class="btn-buy btn-amazon" target="_blank" rel="noopener noreferrer" aria-label="Buy on Amazon KDP">
+              <!-- Amazon icon -->
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13.958 10.09c0 1.232.029 2.256-.591 3.351-.502.891-1.301 1.439-2.186 1.439-1.214 0-1.922-.924-1.922-2.292 0-2.692 2.415-3.182 4.699-3.182v.684zm3.186 7.705c-.209.189-.512.201-.745.074-1.052-.872-1.238-1.276-1.814-2.106-1.734 1.767-2.962 2.297-5.209 2.297-2.66 0-4.731-1.641-4.731-4.925 0-2.565 1.391-4.309 3.37-5.164 1.715-.754 4.11-.891 5.942-1.095V6.52c0-.677.053-1.476-.342-2.061-.346-.523-1.012-.738-1.597-.738-1.085 0-2.05.555-2.286 1.705-.049.257-.237.511-.487.523l-2.735-.298c-.23-.051-.484-.237-.418-.588C7.656 2.208 10.235 1 12.545 1c1.179 0 2.72.312 3.651 1.208C17.336 3.386 17.2 4.984 17.2 6.739v4.984c0 1.499.62 2.155 1.204 2.963.205.286.25.629-.013.842-.649.542-1.804 1.549-2.438 2.117l-.809-.85zM21.479 19.065c-2.467 1.832-6.046 2.807-9.126 2.807-4.312 0-8.192-1.595-11.132-4.247-.231-.207-.025-.49.253-.329 3.172 1.845 7.092 2.954 11.138 2.954 2.73 0 5.731-.567 8.494-1.74.417-.177.765.274.373.555z"/></svg>
+              Buy on Amazon KDP
+            </a>
+            <a href="https://aminamubeen0.gumroad.com/l/imamalinspires" class="btn-buy btn-gumroad" target="_blank" rel="noopener noreferrer" aria-label="Buy on Gumroad">
+              <!-- Gumroad icon (G lettermark) -->
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm.5 17.5h-1.25c-2.9 0-5.25-2.35-5.25-5.25v-.5c0-2.9 2.35-5.25 5.25-5.25H13c2.071 0 3.875 1.198 4.743 2.95l-1.768.884C15.364 9.128 14.268 8.5 13 8.5h-1.75c-1.795 0-3.25 1.455-3.25 3.25v.5c0 1.795 1.455 3.25 3.25 3.25H12.5v-2H11v-1.5h3v5z"/></svg>
+              Buy on Gumroad
+            </a>
+            <a href="https://payhip.com/b/2Rer6" class="btn-buy btn-payhip" target="_blank" rel="noopener noreferrer" aria-label="Buy on Payhip">
+              <!-- Payhip icon (P lettermark) -->
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm1.5 14H10v3.5H8V6.5h5.5C15.43 6.5 17 8.07 17 10v.5c0 1.93-1.57 3.5-3.5 3.5zm0-6H10v4.5h3.5c.828 0 1.5-.672 1.5-1.5V9.5c0-.828-.672-1.5-1.5-1.5z"/></svg>
+              Buy on Payhip
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Book 2 -->
+      <div class="book-card">
+        <div class="book-cover">
+          <!-- Replace the placeholder below with an <img> tag once you have the cover:
+               <img class="book-cover-img" src="cover-duas.jpg" alt="Duas from the Holy Quran cover" /> -->
+          <div class="book-cover-placeholder">
+            <div class="cover-ornament">&#10022;</div>
+            <div class="cover-line"></div>
+            <div class="cover-title-text">Duas from the<br>Holy Quran</div>
+            <div class="cover-line"></div>
+          </div>
+        </div>
+        <div class="book-info">
+          <div class="book-label">eBook · Vol. 1</div>
+          <h2 class="book-title">Duas from the Holy Quran</h2>
+          <p class="book-desc">
+            A heartfelt compilation of supplications found within the Holy Quran — prayers of
+            the Prophets and the believers, offered as a companion for moments of reflection,
+            gratitude, and turning back to God.
+          </p>
+          <div class="buy-buttons">
+            <a href="#" class="btn-buy btn-amazon" target="_blank" rel="noopener noreferrer" aria-label="Buy on Amazon KDP">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M13.958 10.09c0 1.232.029 2.256-.591 3.351-.502.891-1.301 1.439-2.186 1.439-1.214 0-1.922-.924-1.922-2.292 0-2.692 2.415-3.182 4.699-3.182v.684zm3.186 7.705c-.209.189-.512.201-.745.074-1.052-.872-1.238-1.276-1.814-2.106-1.734 1.767-2.962 2.297-5.209 2.297-2.66 0-4.731-1.641-4.731-4.925 0-2.565 1.391-4.309 3.37-5.164 1.715-.754 4.11-.891 5.942-1.095V6.52c0-.677.053-1.476-.342-2.061-.346-.523-1.012-.738-1.597-.738-1.085 0-2.05.555-2.286 1.705-.049.257-.237.511-.487.523l-2.735-.298c-.23-.051-.484-.237-.418-.588C7.656 2.208 10.235 1 12.545 1c1.179 0 2.72.312 3.651 1.208C17.336 3.386 17.2 4.984 17.2 6.739v4.984c0 1.499.62 2.155 1.204 2.963.205.286.25.629-.013.842-.649.542-1.804 1.549-2.438 2.117l-.809-.85zM21.479 19.065c-2.467 1.832-6.046 2.807-9.126 2.807-4.312 0-8.192-1.595-11.132-4.247-.231-.207-.025-.49.253-.329 3.172 1.845 7.092 2.954 11.138 2.954 2.73 0 5.731-.567 8.494-1.74.417-.177.765.274.373.555z"/></svg>
+              Buy on Amazon KDP
+            </a>
+            <a href="https://aminamubeen0.gumroad.com/l/duasfromquran" class="btn-buy btn-gumroad" target="_blank" rel="noopener noreferrer" aria-label="Buy on Gumroad">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm.5 17.5h-1.25c-2.9 0-5.25-2.35-5.25-5.25v-.5c0-2.9 2.35-5.25 5.25-5.25H13c2.071 0 3.875 1.198 4.743 2.95l-1.768.884C15.364 9.128 14.268 8.5 13 8.5h-1.75c-1.795 0-3.25 1.455-3.25 3.25v.5c0 1.795 1.455 3.25 3.25 3.25H12.5v-2H11v-1.5h3v5z"/></svg>
+              Buy on Gumroad
+            </a>
+            <a href="https://payhip.com/b/9UqtD" class="btn-buy btn-payhip" target="_blank" rel="noopener noreferrer" aria-label="Buy on Payhip">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm1.5 14H10v3.5H8V6.5h5.5C15.43 6.5 17 8.07 17 10v.5c0 1.93-1.57 3.5-3.5 3.5zm0-6H10v4.5h3.5c.828 0 1.5-.672 1.5-1.5V9.5c0-.828-.672-1.5-1.5-1.5z"/></svg>
+              Buy on Payhip
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <footer>
+      A quiet project <span class="dot">&#10070;</span>
+      Sayings from Nahj al-Balagha
+    </footer>
+
+  </div>
+
+<script>
+function applyTheme(theme) {
+  const isLight = theme === "light";
+  document.documentElement.setAttribute("data-theme", isLight ? "light" : "dark");
+  const btn = document.getElementById("themeToggle");
+  const icon = document.getElementById("themeIcon");
+  icon.innerHTML = isLight ? "&#9789;" : "&#9728;";
+  btn.setAttribute("aria-label", isLight ? "Switch to dark mode" : "Switch to light mode");
+  try { localStorage.setItem("stillness-theme", theme); } catch (_) {}
+}
+
+function initTheme() {
+  let theme = "dark";
+  try {
+    const saved = localStorage.getItem("stillness-theme");
+    if (saved === "light" || saved === "dark") theme = saved;
+    else if (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches) theme = "light";
+  } catch (_) {}
+  applyTheme(theme);
+  document.getElementById("themeToggle").addEventListener("click", () => {
+    applyTheme(document.documentElement.getAttribute("data-theme") === "light" ? "dark" : "light");
+  });
+}
+
+function initHamburger() {
+  const hamburger = document.getElementById("hamburger");
+  const mobileMenu = document.getElementById("mobileMenu");
+  hamburger.addEventListener("click", () => {
+    const isOpen = hamburger.classList.toggle("open");
+    mobileMenu.classList.toggle("open", isOpen);
+    hamburger.setAttribute("aria-expanded", isOpen);
+    mobileMenu.setAttribute("aria-hidden", !isOpen);
+  });
+  mobileMenu.querySelectorAll("a").forEach(link => {
+    link.addEventListener("click", () => {
+      hamburger.classList.remove("open");
+      mobileMenu.classList.remove("open");
+      hamburger.setAttribute("aria-expanded", "false");
+      mobileMenu.setAttribute("aria-hidden", "true");
+    });
+  });
+}
+
+initTheme();
+initHamburger();
+</script>
+</body>
+</html>
